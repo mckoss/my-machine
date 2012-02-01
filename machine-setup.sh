@@ -37,3 +37,15 @@ get curl
 get emacs23-nox
 get git
 get google-chrome-stable
+get s3cmd
+
+if [ "$(git config --global user.name)" == "" ]; then
+    read -p "Git Fullname: "
+    git config --global user.name "$REPLY"
+    read -p "Git Email: "
+    git config --global user.email "$REPLY"
+fi
+
+if [ ! -f "$HOME/.s3cfg" ]; then
+    s3cmd --configure
+fi
