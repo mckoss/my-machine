@@ -76,11 +76,11 @@ fi
 
 for config in $ROOT_DIR/home/.* ; do
     [ -d $config ] && continue
-    if [ ! -e $HOME/$config ]; then
-        echo Adding $config config file.
-        ln -s $ROOT_DIR/home/$config $HOME/$config
+    base=$(basename $config)
+    if [ -e $HOME/$base ]; then
+        echo Skipping $base config file - file exists.
     else
-        echo Skipping $config config file - file exists.
+        echo Adding $base config file.
+        ln -s $config $HOME/$base
     fi
-    echo $config
 done
