@@ -35,9 +35,9 @@ function download {
 get aptitude
 get curl
 get emacs23-nox
-get git
 get google-chrome-stable
-get s3cmd
+
+get git
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
@@ -46,6 +46,9 @@ if [ "$(git config --global user.name)" == "" ]; then
     git config --global user.email "$REPLY"
 fi
 
+get s3cmd
+
 if [ ! -f "$HOME/.s3cfg" ]; then
     s3cmd --configure
 fi
+
