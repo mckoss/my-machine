@@ -1,18 +1,35 @@
-DOWN_DIR = $HOME/Downloads
+DOWN_DIR=$HOME/Downloads
+ROOT_DIR="$(cd `dirname $0` && pwd)"
 
-read -p "Update package database? (y/N): "
-if [ $REPLY == "y" ]; then
-    sudo apt-get update
+if [ `uname` == "Darwin" ]; then
+    platform="Mac"
+elif [[ `uname` == *W32* ]]; then
+    platform="Windows"
+else
+    platform="Linux"
 fi
+
+echo "I think your machine is running $platform ..."
+
+function check_prog {
+    type $1 > /dev/null 2>&1
+}
 
 function get() {
     for pkg in $* ; do
         echo '==================================='
+        if [ $platform != "Linux" ]; then
+            if ! check_prog $pkg; then
+                echo "You should install $pkg."
+            fi
+            continue
+        fi
+
         if ! $(dpkg -s $pkg > /dev/null 2>&1) ; then
-        echo Installing $pkg
-        sudo apt-get install $pkg
+            echo Installing $pkg
+            sudo apt-get install $pkg
         else
-        echo $pkg already installed.
+            echo $pkg already installed.
         fi
         echo '==================================='
     done
@@ -32,6 +49,13 @@ function download {
     fi
 }
 
+if [ $platform == "Linux" ]; then
+    read -p "Update package database? (y/N): "
+    if [ $REPLY == "y" ]; then
+        sudo apt-get update
+    fi
+fi
+
 get aptitude curl fping emacs23-nox
 get google-chrome-stable
 
@@ -50,3 +74,13 @@ if [ ! -f "$HOME/.s3cfg" ]; then
     s3cmd --configure
 fi
 
+for config in $ROOT_DIR/home/.* ; do
+    [ -d $config ] && continue
+    if [ ! -e $HOME/$config ]; then
+        echo Adding $config config file.
+        ln -s $ROOT_DIR/home/$config $HOME/$config
+    else
+        echo Skipping $config config file - file exists.
+    fi
+    echo $config
+done
