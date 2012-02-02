@@ -6,16 +6,16 @@ if [ $REPLY == "y" ]; then
 fi
 
 function get() {
-    pkg=$1
-
-    echo '==================================='
-    if ! $(dpkg -s $pkg > /dev/null 2>&1) ; then
-    echo Installing $pkg
-    sudo apt-get install $pkg
-    else
-    echo $pkg already installed.
-    fi
-    echo '==================================='
+    for pkg in $* ; do
+        echo '==================================='
+        if ! $(dpkg -s $pkg > /dev/null 2>&1) ; then
+        echo Installing $pkg
+        sudo apt-get install $pkg
+        else
+        echo $pkg already installed.
+        fi
+        echo '==================================='
+    done
 }
 
 function download {
@@ -32,10 +32,7 @@ function download {
     fi
 }
 
-get aptitude
-get curl
-get fping
-get emacs23-nox
+get aptitude curl fping emacs23-nox
 get google-chrome-stable
 
 get git
