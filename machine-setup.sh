@@ -10,10 +10,10 @@ function get() {
 
     echo '==================================='
     if ! $(dpkg -s $pkg > /dev/null 2>&1) ; then
-	echo Installing $pkg
-	sudo apt-get install $pkg
+    echo Installing $pkg
+    sudo apt-get install $pkg
     else
-	echo $pkg already installed.
+    echo $pkg already installed.
     fi
     echo '==================================='
 }
@@ -34,6 +34,7 @@ function download {
 
 get aptitude
 get curl
+get fping
 get emacs23-nox
 get google-chrome-stable
 
