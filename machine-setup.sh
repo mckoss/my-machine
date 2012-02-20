@@ -17,7 +17,7 @@ else
     fi
 fi
 
-get_pkgs aptitude curl fping emacs23-nox
+get_pkgs aptitude curl fping emacs23-nox openssh-server
 get_pkgs python-pip python-virtualenv
 get_pkgs google-chrome-stable
 
