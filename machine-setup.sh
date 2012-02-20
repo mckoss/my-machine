@@ -49,10 +49,17 @@ function download {
     fi
 }
 
-if [ $platform == "Linux" ]; then
-    read -p "Update package database? (y/N): "
-    if [ $REPLY == "y" ]; then
-        sudo apt-get update
+if [ ! -f /etc/apt/sources.list.d/google.list ]; then
+    echo Getting Google Package list
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    sudo apt-get update
+else
+    if [ $platform == "Linux" ]; then
+        read -p "Update package database? (y/N): "
+        if [ $REPLY == "y" ]; then
+            sudo apt-get update
+        fi
     fi
 fi
 
