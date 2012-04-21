@@ -25,4 +25,5 @@ fi
 PATH="/var/lib/gems/1.8/bin:$PATH"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-export PS1="\[\e]2;\u@\h \w\a\]\W $ "
+# export PS1="\[\e]2;\u@\h \w\a\]\W $ "
+export PS1="\[\e]2;\u@\h \w\a\]\e[0;31m\W $\e[m "
