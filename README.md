@@ -3,4 +3,5 @@ on the multiple machines I use/administer.
 
 You can setup a new machine by executing:
 
-    wget -qO- https://raw.github.com/mckoss/my-machine/master/machine-setup.sh | bash
+    wget https://raw.github.com/mckoss/my-machine/master/my-machine.sh
+    ./my-machine.sh
