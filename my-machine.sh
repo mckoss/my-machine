@@ -38,7 +38,7 @@ if [ "$REPLY" != "" ]; then
 fi
 
 # Read prompt will not send stderr back to ssh remove command line - so don't use read -p."
-read -p "Update package database? (y/N)"
+read -p "Update package database? (y/N): "
 if [ "$REPLY" == "y" ]; then
     sudo apt-get update
 fi

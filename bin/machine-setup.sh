@@ -1,5 +1,5 @@
 #!/bin/bash
-BIN_DIR="$(cd `dirname $0` && pwd)"/bin
+BIN_DIR="$(cd `dirname $0` && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
@@ -19,7 +19,11 @@ fi
 
 get_pkgs aptitude curl fping emacs23-nox openssh-server
 get_pkgs python-pip python-virtualenv
-get_pkgs google-chrome-stable
+
+read -p "Install Google Chrome? (y/N)"
+if [ "$REPLY" == 'y' ]; then
+    get_pkgs google-chrome-stable
+fi
 
 get_pkgs git
 

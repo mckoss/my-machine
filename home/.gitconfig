@@ -4,11 +4,10 @@
 
 [github]
   user = mckoss
-  token = 9ea7e85a9d785ae9091ae606d80d1806
 
 [core]
-	excludesfile = /Users/mike/.gitignore
-	autocrlf = input
+    excludesfile = /Users/mike/.gitignore
+    autocrlf = input
 
 [alias]
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
