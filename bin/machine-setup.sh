@@ -17,7 +17,7 @@ else
     fi
 fi
 
-get_pkgs aptitude curl fping emacs23-nox openssh-server
+get_pkgs aptitude curl fping emacs23-nox openssh-server tree
 get_pkgs python-pip python-virtualenv
 
 read -p "Install Google Chrome? (y/N)"
