@@ -1,0 +1,16 @@
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+    echo "Initializing new SSH agent..."
+    ssh-agent > "$SSH_ENV"
+    chmod 600 "$SSH_ENV"
+    . "$SSH_ENV" > /dev/null
+    ssh-add $HOME/.ssh/id_rsa
+    ssh-add -l
+}
+
+if [ -z "$SSH_AGENT_PID" ]; then
+    start_agent
+else
+    echo "Agent already running..."
+fi
