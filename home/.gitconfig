@@ -6,13 +6,15 @@
   user = mckoss
 
 [core]
-    excludesfile = /Users/mike/.gitignore
-    autocrlf = input
+  excludesfile = /Users/mike/.gitignore
+  autocrlf = input
+
+[branch]
+  autosetupmerge = true
+
+[push]
+  default = current
 
 [alias]
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-  type = cat-file -t
-  dump = cat-file -p
-  co = checkout
-  ci = checkin
-  st = status
+  vhist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --name-status
