@@ -21,16 +21,9 @@
 (autoload 'longlines-mode "longlines.el"
  "Minor mode for automatically wrapping long lines." t)
 
-(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t) ;; enable fuzzy matching)
-
-(add-to-list 'auto-mode-alist '("\\.js\\'" . espresso-mode))
-(autoload 'espresso-mode "espresso" nil t)
 
 (setq-default indent-tabs-mode nil)
 (add-hook 'write-file-hooks
