@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "~/.emacs-backups"))))
  '(tab-width 4)
+ '(default-fill-column 79)
  '(c-basic-offset 4)
  '(column-number-mode t)
  '(default-input-method "latin-1-postfix")
@@ -16,7 +17,8 @@
  '(save-place t nil (saveplace))
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
- '(show-trailing-whitespace t))
+ '(show-trailing-whitespace t)
+ )
 
 (autoload 'longlines-mode "longlines.el"
  "Minor mode for automatically wrapping long lines." t)
