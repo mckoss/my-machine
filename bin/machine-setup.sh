@@ -3,28 +3,27 @@ BIN_DIR="$(cd `dirname $0` && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
-if [ ! -f /etc/apt/sources.list.d/google.list ]; then
-    echo Getting Google Package list
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-    sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-    sudo apt-get update
-else
-    if [ $PLATFORM == "Linux" ]; then
-        read -p "Update package database? (y/N): "
-        if [ "$REPLY" == "y" ]; then
+if [ $PLATFORM == "Linux" ]; then
+    if [ ! -f /etc/apt/sources.list.d/google.list ]; then
+	echo Getting Google Package list
+	curl -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+	sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+	sudo apt-get update
+    else
+	read -p "Update package database? (y/N): "
+	if [ "$REPLY" == "y" ]; then
             sudo apt-get update
-        fi
+	fi
+    fi
+
+    get_pkgs aptitude curl fping emacs23-nox openssh-server tree
+    read -p "Install Google Chrome? (y/N)"
+    if [ "$REPLY" == 'y' ]; then
+	get_pkgs google-chrome-stable
     fi
 fi
 
-get_pkgs aptitude curl fping emacs23-nox openssh-server tree
 get_pkgs python-pip python-virtualenv
-
-read -p "Install Google Chrome? (y/N)"
-if [ "$REPLY" == 'y' ]; then
-    get_pkgs google-chrome-stable
-fi
-
 get_pkgs git
 
 if [ "$(git config --global user.name)" == "" ]; then
