@@ -3,6 +3,9 @@ BIN_DIR="$(cd `dirname $0` && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
+mkdir -p $HOME/bin
+mkdir -p $HOME/tmp
+
 if [ $PLATFORM == "Linux" ]; then
     if [ ! -f /etc/apt/sources.list.d/google.list ]; then
     echo Getting Google Package list
