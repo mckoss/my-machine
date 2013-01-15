@@ -6,20 +6,22 @@ source $BIN_DIR/setup-funcs.sh
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 
-get_pkgs software-properties-common
-sudo apt-add-repository ppa:webupd8team/java
-get_pkgs update
-sudo apt-get update
-get_pkgs oracle-java7-installer
-java -version
+read -p "Install Oracle Java? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    sudo apt-add-repository ppa:webupd8team/java
+    get_pkgs update
+    sudo apt-get update
+    get_pkgs oracle-java7-installer
+fi
+
+read -p "Update package database? (y/N): "
+if [ "$REPLY" == "y" ]]; then
+    sudo apt-get update
+fi
 
 get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep
-
 get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
-
-
-
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
@@ -29,7 +31,6 @@ if [ "$(git config --global user.name)" == "" ]; then
 fi
 
 get_pkgs s3cmd
-
 if [ ! -f "$HOME/.s3cfg" ]; then
     s3cmd --configure
 fi
@@ -38,7 +39,10 @@ for config in $PROJ_DIR/home/.* ; do
     [ -d $config ] && continue
     base=$(basename $config)
     if [ -e $HOME/$base ]; then
-        echo Skipping $base config file - file exists.
+        read -p "$base exists - replace? (y/N):"
+        if [ "$REPLY" == "y" ]; then
+            ln -sf $config $HOME/$base
+        fi
     else
         echo Adding $base config file.
         ln -s $config $HOME/$base
