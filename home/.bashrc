@@ -14,7 +14,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.gitbashrc ]; then
+if [[ "$(uname)" != "Linux" && -f ~/.gitbashrc ]]; then
     . ~/.gitbashrc
 fi
 

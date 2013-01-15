@@ -19,7 +19,7 @@ if [ "$REPLY" == "y" ]]; then
     sudo apt-get update
 fi
 
-get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep
+get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
 get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
 
