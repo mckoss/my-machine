@@ -20,6 +20,14 @@ if [ $PLATFORM == "Linux" ]; then
         fi
     fi
 
+    : Nodejs installation
+    sudo apt-get install build-essential
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs npm
+    : sudo apt-get install nodejs-dev
+
     get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep
     read -p "Install Google Chrome? (y/N)"
     if [ "$REPLY" == 'y' ]; then
@@ -29,6 +37,7 @@ fi
 
 get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
+get_pkgs make
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
