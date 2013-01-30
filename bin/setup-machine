@@ -6,35 +6,29 @@ source $BIN_DIR/setup-funcs.sh
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 
-if [ $PLATFORM == "Linux" ]; then
-    if [ ! -f /etc/apt/sources.list.d/google.list ]; then
-        echo Getting Google Package list
-        curl -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> \
-            /etc/apt/sources.list.d/google.list'
-        sudo apt-get update
-    else
-        read -p "Update package database? (y/N): "
-        if [ "$REPLY" == "y" ]; then
-            sudo apt-get update
-        fi
-    fi
-
-    : Nodejs installation
-    sudo apt-get install build-essential
-    sudo apt-get install python-software-properties
-    sudo add-apt-repository ppa:chris-lea/node.js
+read -p "Install Oracle Java? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    sudo apt-add-repository ppa:webupd8team/java
+    get_pkgs update
     sudo apt-get update
-    sudo apt-get install nodejs npm
-    : sudo apt-get install nodejs-dev
-
-    get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep
-    read -p "Install Google Chrome? (y/N)"
-    if [ "$REPLY" == 'y' ]; then
-        get_pkgs google-chrome-stable
-    fi
+    get_pkgs oracle-java7-installer
 fi
 
+: Nodejs installation
+sudo apt-get install build-essential
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs npm
+: sudo apt-get install nodejs-dev
+
+get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep
+read -p "Install Google Chrome? (y/N)"
+if [ "$REPLY" == 'y' ]; then
+    get_pkgs google-chrome-stable
+fi
+
+get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
 get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
 get_pkgs make
@@ -47,7 +41,6 @@ if [ "$(git config --global user.name)" == "" ]; then
 fi
 
 get_pkgs s3cmd
-
 if [ ! -f "$HOME/.s3cfg" ]; then
     s3cmd --configure
 fi
@@ -56,7 +49,10 @@ for config in $PROJ_DIR/home/.* ; do
     [ -d $config ] && continue
     base=$(basename $config)
     if [ -e $HOME/$base ]; then
-        echo Skipping $base config file - file exists.
+        read -p "$base exists - replace? (y/N):"
+        if [ "$REPLY" == "y" ]; then
+            ln -sf $config $HOME/$base
+        fi
     else
         echo Adding $base config file.
         ln -s $config $HOME/$base
