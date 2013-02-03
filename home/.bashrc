@@ -25,9 +25,5 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Load RVM into a shell session *as a function*
-PATH="/var/lib/gems/1.8/bin:$PATH"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # export PS1="\[\e]2;\u@\h \w\a\]\W $ "
 export PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "

@@ -18,8 +18,5 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+    PATH="$HOME/src/my-machine/bin:$HOME/bin:$PATH"
 fi
-
-CLASSPATH="/usr/share/java/js.jar:/usr/share/java/jline.jar"
-export CLASSPATH

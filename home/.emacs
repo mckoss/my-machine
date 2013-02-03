@@ -83,11 +83,6 @@
 
 (global-set-key (kbd "C-x SPC") 'fixup-whitespace)
 
-(setq tags-table-list
-      '("/src/pageforest"
-        "/src/pageforest/appengine/static/src/js"
-        ))
-
 ; Run lint on the current file (should be saved).
 ; Adapted from http://xahlee.org/emacs/elisp_run_current_file.html
 (defun lint-current-file ()
@@ -95,7 +90,7 @@
   (let (extention-alist fname suffix progName cmdStr)
     (setq extention-alist
           '(
-            ("py" . "lint8")
+            ("py" . "pep8 --max-line-length=100 --ignore=E123,E125,E126,E127,E128")
             ("js" . "jslint --strong")
             ("html" . "tidy.py")
             )
@@ -110,46 +105,16 @@
       (message "No recognized program file suffix for this file."))
     )
   )
-(global-set-key [f5] 'lint-current-file)
+(global-set-key (kbd "C-x C-l") 'lint-current-file)
 
-(defun ack-pf (pattern)
-  (interactive (list (read-from-minibuffer "Ack: ")))
-  (compile (concat "ack --nocolor --noheading \""
-                   pattern
-                   "\" ~/src/pageforest")))
-(global-set-key [f4] 'ack-pf)
-
-(defun ack-py (pattern)
-  (interactive (list (read-from-minibuffer "Ack: ")))
-  (compile (concat "ack --nocolor --noheading --py \""
-                   pattern
-                   "\" ~/src/pageforest")))
-
-(defun ack-js (pattern)
-  (interactive (list (read-from-minibuffer "Ack: ")))
-  (compile (concat "ack --nocolor --noheading --js \""
-                   pattern
-                   "\" ~/src/pageforest/appengine/static/src/js")))
-
-(defun do-check () (interactive) (compile "~/src/pageforest/tools/check.py -v || cat ~/src/pageforest/check.log"))
-(global-set-key [f6] 'do-check)
-
-; Evaluate a region as a python expression and replace it with it's result
-(defun pyval-region ()
+(defun run-tests ()
   (interactive)
-  (shell-command-on-region (mark) (point) "pyval" t t))
-(global-set-key [f7] 'pyval-region)
+  (compile "tests")
+)
+(global-set-key (kbd "C-x T") 'run-tests)
 
 ; Pretty print the selected region (javascript only for now)
 (defun pretty-print-region ()
   (interactive)
   (shell-command-on-region (mark) (point) "jspretty" t t))
 (global-set-key [f8] 'pretty-print-region)
-
-(defun pep8 ()
-  (interactive)
-  (compile (concat "pep8 \"" (buffer-file-name) "\""))
-)
-(global-set-key [f11] 'pep8)
-
-(global-set-key [f12] 'speedbar)
