@@ -33,6 +33,8 @@ get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
 get_pkgs make
 
+sudo pip install pep8 pylint
+
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
     git config --global user.name "$REPLY"

@@ -109,7 +109,7 @@
 
 (defun run-tests ()
   (interactive)
-  (compile "tests")
+  (compile "run-tests")
 )
 (global-set-key (kbd "C-x T") 'run-tests)
 
