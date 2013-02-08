@@ -1,0 +1,13 @@
+[MASTER]
+ignore=env
+
+[MESSAGES CONTROL]
+disable=C0301
+
+[REPORTS]
+output-format=parseable
+include-ids=yes
+reports=no
+
+[FORMAT]
+max-line-length=100
