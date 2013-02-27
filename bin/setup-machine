@@ -33,7 +33,7 @@ fi
 get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
 get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
-get_pkgs make
+get_pkgs make unzip
 
 sudo pip install pep8 pylint
 
