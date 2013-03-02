@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "~/.emacs-backups"))))
  '(tab-width 4)
- '(default-fill-column 79)
+ '(default-fill-column 95)
  '(c-basic-offset 4)
  '(column-number-mode t)
  '(default-input-method "latin-1-postfix")

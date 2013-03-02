@@ -6,4 +6,6 @@ alias pfpath='PATH="$HOME/src/pageforest/tools:$PATH"'
 alias gopath='PATH="$HOME/src/go/bin:$PATH"'
 alias fle="perl -pi -e 's/\r\n?/\n/g'"
 
-alias ack='ack-grep'
+if ! type ack > /dev/null 2>&1; then
+   alias ack='ack-grep'
+fi
