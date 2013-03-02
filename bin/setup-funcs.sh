@@ -85,7 +85,7 @@ function ensure_py {
 function get_pkgs() {
     for pkg in $* ; do
         echo '==================================='
-        if [ $PLATFORM != "Linux" ]; then
+        if [ $PLATFORM == "Windows" ]; then
             if ! check_prog $pkg; then
                 echo "You should install $pkg."
             fi
@@ -94,7 +94,7 @@ function get_pkgs() {
 
         if ! $(dpkg -s $pkg > /dev/null 2>&1) ; then
             echo Installing $pkg
-            sudo apt-get install $pkg
+            $PINSTALL $pkg
         else
             echo $pkg already installed.
         fi

@@ -3,29 +3,39 @@ BIN_DIR="$(cd `dirname $0` && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
-if [ ! -f /etc/apt/sources.list.d/google.list ]; then
-    echo Getting Google Package list
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-    sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+mkdir -p $HOME/bin
+mkdir -p $HOME/tmp
+
+read -p "Install Oracle Java? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    sudo apt-add-repository ppa:webupd8team/java
+    get_pkgs update
     sudo apt-get update
-else
-    if [ $PLATFORM == "Linux" ]; then
-        read -p "Update package database? (y/N): "
-        if [ "$REPLY" == "y" ]; then
-            sudo apt-get update
-        fi
-    fi
+    get_pkgs oracle-java7-installer
 fi
 
-get_pkgs aptitude curl fping emacs23-nox openssh-server tree
-get_pkgs python-pip python-virtualenv
+sudo apt-get install build-essential
+sudo apt-get install python-software-properties
 
-read -p "Install Google Chrome? (y/N)"
+read -p "Install Node.js? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    sudo add-apt-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs npm
+    : sudo apt-get install nodejs-dev
+fi
+
+read -p "Install Google Chrome? (y/N): "
 if [ "$REPLY" == 'y' ]; then
     get_pkgs google-chrome-stable
 fi
 
+get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
+get_pkgs python-pip python-virtualenv
 get_pkgs git mercurial
+get_pkgs make unzip
+
+sudo pip install pep8 pylint
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
@@ -35,18 +45,25 @@ if [ "$(git config --global user.name)" == "" ]; then
 fi
 
 get_pkgs s3cmd
-
 if [ ! -f "$HOME/.s3cfg" ]; then
     s3cmd --configure
 fi
 
 for config in $PROJ_DIR/home/.* ; do
     [ -d $config ] && continue
-    base=$(basename $config)
-    if [ -e $HOME/$base ]; then
-        echo Skipping $base config file - file exists.
-    else
+    base="$(basename $config)"
+    if [ ! -e "$HOME/$base" ]; then
         echo Adding $base config file.
         ln -s $config $HOME/$base
+        continue
+    fi
+
+    if [ ! -h "$HOME/$base" ]; then
+        read -p "$base exists - replace? (y/N):"
+        if [ "$REPLY" == "y" ]; then
+            ln -sf $config $HOME/$base
+        fi
+    else
+        echo Config file $base already linked.
     fi
 done
