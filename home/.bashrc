@@ -1,4 +1,10 @@
-# If not running interactively, don't do anything
+PATH="$HOME/src/my-machine/bin:$HOME/bin:$PATH"
+
+if [ -d "/usr/local/git/bin" ]; then
+    PATH="$PATH:/usr/local/git/bin"
+fi
+
+# If not running interactively, stop here
 [ -z "$PS1" ] && return
 
 HISTCONTROL=ignoredups:ignorespace
