@@ -16,6 +16,7 @@ fi
 
 sudo apt-get install build-essential
 sudo apt-get install python-software-properties
+sudo apt-get install python-dev
 
 read -p "Install Node.js? (y/N): "
 if [ "$REPLY" == "y" ]; then

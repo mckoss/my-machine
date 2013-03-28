@@ -1,0 +1,4 @@
+# Make a gource video of the current repo
+# sudo apt-get install gource
+# sudo apt-get install ffmpeg libavcodec-extra-53
+time gource -r 30 -i 15 -s 1 -o - | ffmpeg -y -b 3000K -r 30 -f image2pipe -vcodec ppm -i - -vcodec libx264 gource.mp4
