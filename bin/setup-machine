@@ -5,6 +5,7 @@ source $BIN_DIR/setup-funcs.sh
 
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
+mkdir -p $HOME/.ssh
 
 read -p "Install Oracle Java? (y/N): "
 if [ "$REPLY" == "y" ]; then
@@ -14,9 +15,12 @@ if [ "$REPLY" == "y" ]; then
     get_pkgs oracle-java7-installer
 fi
 
-sudo apt-get install build-essential
-sudo apt-get install python-software-properties
-sudo apt-get install python-dev
+read -p "Install Python dev? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    get_pkgs build-essential
+    get_pkgs python-software-properties
+    get_pkgs python-dev
+fi
 
 read -p "Install Node.js? (y/N): "
 if [ "$REPLY" == "y" ]; then
@@ -31,23 +35,25 @@ if [ "$REPLY" == 'y' ]; then
     get_pkgs google-chrome-stable
 fi
 
-get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
-get_pkgs python-pip python-virtualenv
-get_pkgs git mercurial
-get_pkgs make unzip
+if [ $PLATFORM == "Linux" ]; then
+    get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
+    get_pkgs python-pip python-virtualenv
+    get_pkgs git mercurial
+    get_pkgs make unzip
+    get_pkgs s3cmd
+    if [ ! -f "$HOME/.s3cfg" ]; then
+        s3cmd --configure
+    fi
+fi
 
-sudo pip install pep8 pylint
+ensure_py pep8
+ensure_py pylint
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
     git config --global user.name "$REPLY"
     read -p "Git Email: "
     git config --global user.email "$REPLY"
-fi
-
-get_pkgs s3cmd
-if [ ! -f "$HOME/.s3cfg" ]; then
-    s3cmd --configure
 fi
 
 for config in $PROJ_DIR/home/.* ; do
@@ -66,5 +72,17 @@ for config in $PROJ_DIR/home/.* ; do
         fi
     else
         echo Config file $base already linked.
+    fi
+done
+
+for file in $PROJ_DIR/ssh/* ; do
+    [ -d $file ] && continue
+    base="$(basename $file)"
+    if [ ! -e "$HOME/.ssh/$base" ]; then
+        echo Adding $base security file.
+        cp $file $HOME/.ssh/$base
+        continue
+    else
+        echo $HOME/.ssh/$base already exists ... skipping.
     fi
 done

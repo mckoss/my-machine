@@ -78,7 +78,7 @@ function check_py {
 
 function ensure_py {
     if ! check_py $1 ; then
-        pip install $1
+        sudo pip install $1
     fi
 }
 
