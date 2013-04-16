@@ -40,7 +40,6 @@ if [ $PLATFORM == "Linux" ]; then
     get_pkgs python-pip python-virtualenv
     get_pkgs git mercurial
     get_pkgs make unzip
-    get_pkgs s3cmd
     if [ ! -f "$HOME/.s3cfg" ]; then
         s3cmd --configure
     fi
@@ -48,6 +47,7 @@ fi
 
 ensure_py pep8
 ensure_py pylint
+ensure_py s3cmd
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
