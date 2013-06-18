@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# Test a device with snmpwalk -v1 -c public x.x.x.x
+
+SECS=5
+
+# I don't have the MIB database on latest Ubuntu (argh!)
+ifInOctets="iso.3.6.1.2.1.2.2.1.10"
+ifOutOctets="iso.3.6.1.2.1.2.2.1.16"
+sysName="iso.3.6.1.2.1.1.5.0"
+upTime="iso.3.6.1.2.1.1.3.0"
+
+SECRET=$1
+if [ -z $SECRET ]; then
+    . ~/.sprouters 2>/dev/null
+    if [ -z $SECRET ]; then
+        echo -n "Community string: "
+        stty -echo
+        read SECRET
+        stty echo
+        echo
+    fi
+fi
+
+echo "SECRET=$SECRET" > ~/.sprouters
+
+VAL="s/^.*: \(.*\)/\1/"
+
+function track {
+    NAME=$1
+    CTR=$2
+    VAR_NAME=$3
+
+    if [ -z ${!VAR_NAME} ]; then eval ${VAR_NAME}=0; fi
+
+    BYTES=`snmpget -v1 -c $COMMUNITY $IP ${CTR}.$IF | sed -e "$VAL"`
+    if [ ${!VAR_NAME} != 0 ]; then
+        printf "$NAME: %'d kbps\n" $(( ($BYTES - ${!VAR_NAME})/$SECS/100 ))
+    fi
+    eval ${VAR_NAME}=$BYTES
+}
+
+function trackpair {
+    ROUTER=$1
+    IP=$2
+    COMMUNITY=$3
+    IF=$4
+
+    track "$ROUTER UP" $ifInOctets ${ROUTER}_UP
+    track "$ROUTER DOWN" $ifOutOctets ${ROUTER}_DOWN
+}
+
+function uptime {
+    IP=$1
+    COMMUNITY=$2
+
+    NAME=`snmpget -v1 -c $COMMUNITY $IP $sysName | sed -e "$VAL"`
+    UPTIME=`snmpget -v1 -c $COMMUNITY $IP $upTime | sed -e "$VAL"`
+    printf "$NAME: $UPTIME\n"
+}
+
+# uptime 192.168.1.4 public
+# uptime 192.168.1.2 public
+uptime 67.136.217.101 $SECRET
+# uptime 67.136.217.102 public
+uptime office.startpad.org $SECRET
+uptime mckoss.dyndns.org $SECRET
+uptime mawgrammy.dyndns.org $SECRET
+
+while true; do
+    # StartPad
+    trackpair mckoss mckoss.dyndns.org $SECRET 7
+    trackpair StartPad office.startpad.org public 7
+    trackpair Impresys 67.136.217.101 $SECRET 7
+    trackpair mawgrammy mawgrammy.dyndns.org $SECRET 7
+    # trackpair SlimTrader 67.136.217.102 public 2
+    # trackpair Printer 192.168.1.2 public 1
+
+    sleep $SECS
+    echo =====================
+done
