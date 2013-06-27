@@ -20,7 +20,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [[ "$(uname)" != "Linux" && -f ~/.gitbashrc ]]; then
+if [[ $PLATFORM == "Windows" && -f ~/.gitbashrc ]]; then
     . ~/.gitbashrc
 fi
 
@@ -33,3 +33,5 @@ fi
 
 # export PS1="\[\e]2;\u@\h \w\a\]\W $ "
 export PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
