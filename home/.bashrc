@@ -39,3 +39,7 @@ fi
 export PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/src/camlistore/bin
+
+export GOPATH=$HOME/godev
+PATH=$PATH:$GOPATH/bin
