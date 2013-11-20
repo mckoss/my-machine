@@ -38,6 +38,8 @@ function track {
     CTR=$1; shift
     VAR_NAME=$1; shift
 
+    echo track $IP
+
     if [ -z ${!VAR_NAME} ]; then eval ${VAR_NAME}=0; fi
 
     BYTES=`snmpget -v1 -c $COMMUNITY $IP ${CTR}.$IF | sed -e "$VAL"`
@@ -61,18 +63,21 @@ function uptime {
     IP=$1; shift
     COMMUNITY=$1; shift
 
+    echo uptime $IP
+
     NAME=`snmpget -v1 -c $COMMUNITY $IP $sysName | sed -e "$VAL"`
     UPTIME=`snmpget -v1 -c $COMMUNITY $IP $upTime | sed -e "$VAL"`
     printf "$NAME: $UPTIME\n"
 }
 
-for ROUTER in "$ROUTERS"; do
+for ROUTER in $ROUTERS ; do
     uptime $ROUTER $SECRET
 done
 
 while true; do
     N=1
-    for ROUTER in "$ROUTERS"; do
+    for ROUTER in $ROUTERS ; do
+        echo router $ROUTER
         trackpair "V${N}" $ROUTER $SECRET 7
     done
     N=$((N + 1))
