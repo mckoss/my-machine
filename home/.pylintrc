@@ -5,7 +5,7 @@ ignore=env
 disable=C0301,C0111,C0103,R0903,R0201,W0613,W0703,E0602,W0403,W0603,W0142,W0201,W0141,R0904,W0212,C0321,R0902,R0911,W0511,R0912
 
 [REPORTS]
-output-format=parseable
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg} % (self.name, self.line_format)
 include-ids=yes
 reports=no
 
