@@ -43,3 +43,5 @@ PATH=$PATH:$HOME/src/camlistore/bin
 
 export GOPATH=$HOME/godev
 PATH=$PATH:$GOPATH/bin
+
+PATH=$PATH:/Applications/dart/dart-sdk/bin
