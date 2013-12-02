@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/Applications/Inkscape.app/Contents/Resources/bin/inkscape $*
