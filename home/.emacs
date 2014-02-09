@@ -34,6 +34,11 @@
                (untabify (point-min) (point-max)))
            (delete-trailing-whitespace)))
 
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)
+            (setq python-indent-offset 4)
+            (setq tab-width 4)))
 
 ;; From http://stackoverflow.com/questions/92971/how-do-i-set-the-size-of-emacs-window
 (defun set-frame-size-according-to-resolution ()
