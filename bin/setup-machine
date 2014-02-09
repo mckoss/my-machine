@@ -1,6 +1,7 @@
 #!/bin/bash
-source .envrc
-source setup-funcs.sh
+BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+source $BIN_DIR/.envrc
+source $BIN_DIR/setup-funcs.sh
 
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
