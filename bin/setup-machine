@@ -1,12 +1,12 @@
 #!/bin/bash
-BIN_DIR="$(cd `dirname $0` && pwd)"
-GOPATH=$HOME/godev
-source $BIN_DIR/.envrc
-source $BIN_DIR/setup-funcs.sh
+source .envrc
+source setup-funcs.sh
 
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 mkdir -p $HOME/.ssh
+
+GOPATH=$HOME/godev
 mkdir -p $GOPATH
 
 read -p "Install Oracle Java? (y/N): "
