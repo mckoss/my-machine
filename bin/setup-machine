@@ -78,7 +78,7 @@ for config in $PROJ_DIR/home/.* ; do
     fi
 done
 
-ln -sf $PROJ_DIR/home/dart_mode.el ~/.emacs.d/dart_mode.el
+ln -sf $PROJ_DIR/home/dart-mode.el ~/.emacs.d/dart-mode.el
 
 for file in $PROJ_DIR/ssh/* ; do
     [ -d $file ] && continue
