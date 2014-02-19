@@ -6,6 +6,7 @@ source $BIN_DIR/setup-funcs.sh
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 mkdir -p $HOME/.ssh
+mkdir -p $HOME/.emacs.d
 
 GOPATH=$HOME/godev
 mkdir -p $GOPATH
@@ -78,7 +79,13 @@ for config in $PROJ_DIR/home/.* ; do
     fi
 done
 
-ln -sf $PROJ_DIR/home/dart-mode.el ~/.emacs.d/dart-mode.el
+for file in $PROJ_DIR/home/*.el; do
+    echo "Linking emacs file $file."
+    ln -sf $file $HOME/.emacs.d/$(basename "$file")
+done
+
+ln -sf $PROJ_DIR/home/go-mode-load.el ~/.emacs.d/go-mode-load.el
+ln -sf $PROJ_DIR/home/go-mode.el ~/.emacs.d/go-mode.el
 
 for file in $PROJ_DIR/ssh/* ; do
     [ -d $file ] && continue

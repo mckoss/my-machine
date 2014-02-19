@@ -38,13 +38,13 @@ fi
 # export PS1="\[\e]2;\u@\h \w\a\]\W $ "
 export PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "
 
-export GOPATH=$HOME/godev
-PATH=$PATH:$GOPATH/bin
+export GOPATH=$HOME/go
+PATH="$GOPATH/bin:$PATH"
 
-PATH=$PATH:/Applications/dart/dart-sdk/bin
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH="/Applications/dart/dart-sdk/bin:$PATH"
+PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 
 # Load RVM into a shell session *as a function
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-export PATH=$HOME/.node/bin:$PATH
+export PATH="$HOME/.node/bin:$PATH"

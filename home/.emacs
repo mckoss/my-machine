@@ -127,3 +127,4 @@
 (add-to-list 'load-path "~/.emacs.d/")
 (require 'dart-mode)
 (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
+(require 'go-mode-load)
