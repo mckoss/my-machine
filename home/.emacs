@@ -98,7 +98,7 @@
             ("py" . "check-py")
             ("js" . "jslint --strong")
             ("html" . "tidy.py")
-            ("go" . "go test")
+            ("go" . "go test -v")
             )
           )
     (setq fname (buffer-file-name))
