@@ -39,6 +39,13 @@ if [ "$REPLY" == 'y' ]; then
     get_pkgs google-chrome-stable
 fi
 
+read -p "Install Latest Go language.? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    sudo add-apt-respository ppa:gophers/go
+    sudo apt-get update
+    sudo apt-get install golang
+fi
+
 if [ $PLATFORM == "Linux" ]; then
     get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
     get_pkgs python-pip python-virtualenv

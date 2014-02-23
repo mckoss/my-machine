@@ -92,17 +92,18 @@
 ; Adapted from http://xahlee.org/emacs/elisp_run_current_file.html
 (defun lint-current-file ()
   (interactive)
-  (let (extention-alist fname suffix progName cmdStr)
-    (setq extention-alist
+  (let (extension-alist fname suffix progName cmdStr)
+    (setq extension-alist
           '(
             ("py" . "check-py")
             ("js" . "jslint --strong")
             ("html" . "tidy.py")
+            ("go" . "go test")
             )
           )
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
-    (setq progName (cdr (assoc suffix extention-alist)))
+    (setq progName (cdr (assoc suffix extension-alist)))
     (setq cmdStr (concat progName " \""   fname "\""))
 
     (if progName
@@ -128,3 +129,4 @@
 (require 'dart-mode)
 (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
 (require 'go-mode-load)
+(add-hook 'before-save-hook 'gofmt-before-save)
