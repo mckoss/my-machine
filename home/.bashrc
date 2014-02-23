@@ -39,7 +39,7 @@ fi
 export PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "
 
 export GOPATH=$HOME/go
-PATH="$GOPATH/bin:$PATH"
+PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
 
 PATH="/Applications/dart/dart-sdk/bin:$PATH"
 PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting

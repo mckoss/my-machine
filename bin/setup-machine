@@ -11,6 +11,13 @@ mkdir -p $HOME/.emacs.d
 GOPATH=$HOME/godev
 mkdir -p $GOPATH
 
+read -p "Install Go 1.2? (y/N): "
+if [ "$REPLY" == "y" ]; then
+    GODOWNLOAD="https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz"
+    download "$GODOWNLOAD"
+    sudo tar -C /usr/local -xzf $DOWN_DIR/$(basename "$GODOWNLOAD")
+fi
+
 read -p "Install Oracle Java? (y/N): "
 if [ "$REPLY" == "y" ]; then
     sudo apt-add-repository ppa:webupd8team/java
@@ -37,13 +44,6 @@ fi
 read -p "Install Google Chrome? (y/N): "
 if [ "$REPLY" == 'y' ]; then
     get_pkgs google-chrome-stable
-fi
-
-read -p "Install Latest Go language.? (y/N): "
-if [ "$REPLY" == "y" ]; then
-    sudo add-apt-respository ppa:gophers/go
-    sudo apt-get update
-    sudo apt-get install golang
 fi
 
 if [ $PLATFORM == "Linux" ]; then
