@@ -8,7 +8,7 @@ mkdir -p $HOME/tmp
 mkdir -p $HOME/.ssh
 mkdir -p $HOME/.emacs.d
 
-GOPATH=$HOME/godev
+GOPATH=$HOME/go
 mkdir -p $GOPATH
 
 read -p "Install Go 1.2? (y/N): "
