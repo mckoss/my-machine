@@ -125,8 +125,6 @@
   (shell-command-on-region (mark) (point) "jspretty" t t))
 (global-set-key [f8] 'pretty-print-region)
 
-(add-to-list 'load-path "~/.emacs.d/")
-
 ; Install additional emacs modes
 (add-to-list 'load-path "~/.emacs.d/")
 
