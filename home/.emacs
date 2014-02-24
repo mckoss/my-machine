@@ -126,7 +126,16 @@
 (global-set-key [f8] 'pretty-print-region)
 
 (add-to-list 'load-path "~/.emacs.d/")
+
+; Install additional emacs modes
+(add-to-list 'load-path "~/.emacs.d/")
+
 (require 'dart-mode)
 (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
+
 (require 'go-mode-load)
 (add-hook 'before-save-hook 'gofmt-before-save)
+
+(defun set-newline-and-indent()
+  (local-set-key (kbd "RET") 'newline-and-indent))
+(add-hook 'go-mode-hook 'set-newline-and-indent)

@@ -91,9 +91,6 @@ for file in $PROJ_DIR/home/*.el; do
     ln -sf $file $HOME/.emacs.d/$(basename "$file")
 done
 
-ln -sf $PROJ_DIR/home/go-mode-load.el ~/.emacs.d/go-mode-load.el
-ln -sf $PROJ_DIR/home/go-mode.el ~/.emacs.d/go-mode.el
-
 for file in $PROJ_DIR/ssh/* ; do
     [ -d $file ] && continue
     base="$(basename $file)"
