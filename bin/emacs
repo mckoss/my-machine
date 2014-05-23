@@ -1,0 +1,2 @@
+#!/bin/bash
+nohup /Applications/Emacs.app/Contents/MacOS/Emacs $* >/dev/null 2>&1 &
