@@ -11,6 +11,17 @@ mkdir -p $HOME/.emacs.d
 GOPATH=$HOME/go
 mkdir -p $GOPATH
 
+if [[ $PLATFORM == "Mac" ]]; then
+    if check_prog brew; then
+        echo "Homebrew is already installed."
+    else
+        read -p "Install Homebrew package manager? (y/N): "
+        if [ "$REPLY" == "y" ]; then
+            ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+        fi
+    fi
+fi
+
 read -p "Install Go 1.2? (y/N): "
 if [ "$REPLY" == "y" ]; then
     GODOWNLOAD="https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz"

@@ -39,8 +39,8 @@ Linux)
     PINSTALL='sudo apt-get install'
     ;;
 Mac)
-    PSEARCH='port search'
-    PINSTALL='sudo port install'
+    PSEARCH='brew search'
+    PINSTALL='brew install'
     ;;
 *)
     PSEARCH='echo'
