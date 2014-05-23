@@ -1,3 +1,2 @@
 #!/bin/bash
-
-/Applications/Inkscape.app/Contents/Resources/bin/inkscape $*
+nohup /Applications/Inkscape.app/Contents/Resources/bin/inkscape $* >/dev/null 2>&1 &
