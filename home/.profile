@@ -1,4 +1,5 @@
 export GOPATH=$HOME/go
+export DOCKER_HOST=tcp://127.0.0.1:4243
 
 PATH="$HOME/src/my-machine/bin:$HOME/bin:$PATH"
 if [ -d "/usr/local/git/bin" ]; then
