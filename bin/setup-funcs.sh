@@ -78,6 +78,7 @@ function check_py {
 
 function ensure_py {
     if ! check_py $1 ; then
+        echo "Pip Installing $1 (as root)"
         sudo pip install $1
     fi
 }
@@ -99,5 +100,31 @@ function get_pkgs() {
             echo $pkg already installed.
         fi
         echo '==================================='
+    done
+}
+
+link_files () {
+    dest=$1; shift
+    files=$*
+
+    mkdir -p $dest
+
+    for file in $files ; do
+        [ -d $file ] && continue
+        base="$(basename $file)"
+        if [ ! -e "$dest/$base" ]; then
+            echo Linking $base file.
+            ln -s $file "$dest/$base"
+            continue
+        fi
+
+        if [ ! -h "$dest/$base" ]; then
+            read -p "$base exists - replace? (y/N):"
+            if [ "$REPLY" == "y" ]; then
+                ln -sf $file "$dest/$base"
+            fi
+        else
+            echo File $base already linked.
+        fi
     done
 }

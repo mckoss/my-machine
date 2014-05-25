@@ -5,10 +5,6 @@ source $BIN_DIR/setup-funcs.sh
 
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
-mkdir -p $HOME/.ssh
-mkdir -p $HOME/.emacs.d
-
-GOPATH=$HOME/go
 mkdir -p $GOPATH
 
 if [[ $PLATFORM == "Mac" ]]; then
@@ -20,6 +16,11 @@ if [[ $PLATFORM == "Mac" ]]; then
             ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
         fi
     fi
+
+    if ! check_prog pip; then
+        echo "Installing pip..."
+        sudo easy_install pip
+    fi
 fi
 
 read -p "Install Go 1.2? (y/N): "
@@ -29,14 +30,6 @@ if [ "$REPLY" == "y" ]; then
     sudo tar -C /usr/local -xzf $DOWN_DIR/$(basename "$GODOWNLOAD")
 fi
 
-read -p "Install Oracle Java? (y/N): "
-if [ "$REPLY" == "y" ]; then
-    sudo apt-add-repository ppa:webupd8team/java
-    get_pkgs update
-    sudo apt-get update
-    get_pkgs oracle-java7-installer
-fi
-
 read -p "Install Python dev? (y/N): "
 if [ "$REPLY" == "y" ]; then
     get_pkgs build-essential
@@ -44,24 +37,25 @@ if [ "$REPLY" == "y" ]; then
     get_pkgs python-dev
 fi
 
-read -p "Install Node.js? (y/N): "
-if [ "$REPLY" == "y" ]; then
-    sudo add-apt-repository ppa:chris-lea/node.js
-    sudo apt-get update
-    sudo apt-get install nodejs npm
-    : sudo apt-get install nodejs-dev
-fi
-
-read -p "Install Google Chrome? (y/N): "
-if [ "$REPLY" == 'y' ]; then
-    get_pkgs google-chrome-stable
+if ! check_prog s3cmd; then
+    echo "Installing s3cmd as root"
+    sudo pip install s3cmd
 fi
 
 if [ $PLATFORM == "Linux" ]; then
+    read -p "Install Node.js? (y/N): "
+    if [ "$REPLY" == "y" ]; then
+        sudo add-apt-repository ppa:chris-lea/node.js
+        sudo apt-get update
+        sudo apt-get install nodejs npm
+        : sudo apt-get install nodejs-dev
+    fi
+
     get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
     get_pkgs python-pip python-virtualenv
     get_pkgs git mercurial
     get_pkgs make unzip
+
     if [ ! -f "$HOME/.s3cfg" ]; then
         s3cmd --configure
     fi
@@ -69,7 +63,6 @@ fi
 
 ensure_py pep8
 ensure_py pylint
-ensure_py s3cmd
 
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
@@ -78,38 +71,6 @@ if [ "$(git config --global user.name)" == "" ]; then
     git config --global user.email "$REPLY"
 fi
 
-for config in $PROJ_DIR/home/.* ; do
-    [ -d $config ] && continue
-    base="$(basename $config)"
-    if [ ! -e "$HOME/$base" ]; then
-        echo Adding $base config file.
-        ln -s $config $HOME/$base
-        continue
-    fi
-
-    if [ ! -h "$HOME/$base" ]; then
-        read -p "$base exists - replace? (y/N):"
-        if [ "$REPLY" == "y" ]; then
-            ln -sf $config $HOME/$base
-        fi
-    else
-        echo Config file $base already linked.
-    fi
-done
-
-for file in $PROJ_DIR/home/*.el; do
-    echo "Linking emacs file $file."
-    ln -sf $file $HOME/.emacs.d/$(basename "$file")
-done
-
-for file in $PROJ_DIR/ssh/* ; do
-    [ -d $file ] && continue
-    base="$(basename $file)"
-    if [ ! -e "$HOME/.ssh/$base" ]; then
-        echo Adding $base security file.
-        cp $file $HOME/.ssh/$base
-        continue
-    else
-        echo $HOME/.ssh/$base already exists ... skipping.
-    fi
-done
+link_files $HOME $PROJ_DIR/home/.*
+link_files $HOME/.emacs.d $PROJ_DIR/home/*.el
+link_files $HOME/.ssh $PROJ_DIR/ssh/*
