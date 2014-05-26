@@ -1,5 +1,8 @@
 #!/bin/bash
 # docker-cp --- Copy files to service@docker_image.
+BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+source $BIN_DIR/.envrc
+source $BIN_DIR/setup-funcs.sh
 
 FROM="$1"; shift
 TO="$1"; shift

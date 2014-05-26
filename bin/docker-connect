@@ -1,5 +1,8 @@
 #!/bin/bash
 # docker-connect --- Connect to service@docker_image.
+BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+source $BIN_DIR/.envrc
+source $BIN_DIR/setup-funcs.sh
 
 if [[ "$1" != "" ]]; then
     CONTAINER="$1"; shift

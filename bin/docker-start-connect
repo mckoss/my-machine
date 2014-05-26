@@ -1,13 +1,16 @@
 #!/bin/bash
 # docker-start-connect --- Start docker image and connect to ssh server on it.
+BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+source $BIN_DIR/.envrc
+source $BIN_DIR/setup-funcs.sh
 
 if [[ "$1" != "" ]]; then
     IMAGE="$1"; shift
 else
-    IMAGE="mckoss/sshd"
+    IMAGE="sshd"
 fi
 
-docker run -p 22 -d $IMAGE
+docker run -p 22 -d ${DOCKER_USER}/$IMAGE
 
 sleep 1
 docker-connect

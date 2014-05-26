@@ -1,5 +1,8 @@
 #!/bin/bash
 # docker-gc --- Remove stopped docker containers and untagged images.
+BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+source $BIN_DIR/.envrc
+source $BIN_DIR/setup-funcs.sh
 
 RUNNING=$(docker ps -q)
 ALL=$(docker ps -a -q)
