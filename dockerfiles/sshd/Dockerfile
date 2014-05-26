@@ -10,6 +10,7 @@ RUN echo 'service:service' | chpasswd
 
 RUN mkdir -p /home/service/.ssh
 ADD authorized_keys /home/service/.ssh/authorized_keys
+RUN chown service /home/service/.ssh/authorized_keys
 
 RUN mkdir -p /root/.ssh
 ADD authorized_keys /root/.ssh/authorized_keys
