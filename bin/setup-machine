@@ -68,7 +68,7 @@ if [ $PLATFORM == "Linux" ]; then
         sudo add-apt-repository ppa:chris-lea/node.js
         : sudo apt-get update
         echo "Installing node"
-        sudo apt-get install nodejs npm
+        get_pkgs nodejs npm
         : sudo apt-get install nodejs-dev
     fi
 
