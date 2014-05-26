@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Starting ssh server..."
+service ssh start
+
+seconds=0
+delay=$((60 * 60))
+
+while true; do
+    echo "Process has been running for $((seconds / 60)) minutes."
+    sleep $delay
+    seconds=$((seconds + delay))
+done

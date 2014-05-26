@@ -1,10 +1,22 @@
 #!/bin/bash
-# docker-gc --- Remove stopped docker containers
+# docker-gc --- Remove stopped docker containers and untagged images.
 
 RUNNING=$(docker ps -q)
 ALL=$(docker ps -a -q)
+UNTAGGED=$(docker images | grep "^<none>" | awk '{print $3}')
 
-for container in $ALL ; do
+if [[ "$1" == "-f" && "$RUNNING" != "" ]] ; then
+    echo "Stopping running containers..."
+    docker stop $RUNNING
+    RUNNING=""
+fi
+
+if [[ "$UNTAGGED" != "" ]]; then
+    echo "Removing untagged images..."
+    docker rmi $UNTAGGED
+fi
+
+for container in $ALL; do
     [[ "$RUNNING" =~ "$container" ]] && continue
     echo Removing container: $(docker rm $container)
 done
