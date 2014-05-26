@@ -7,6 +7,13 @@ mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 mkdir -p $GOPATH
 
+if [ "$(git config --global user.name)" == "" ]; then
+    read -p "Git Fullname: "
+    git config --global user.name "$REPLY"
+    read -p "Git Email: "
+    git config --global user.email "$REPLY"
+fi
+
 if [[ $PLATFORM == "Mac" ]]; then
     if check_prog brew; then
         echo "Homebrew is already installed."
@@ -23,11 +30,23 @@ if [[ $PLATFORM == "Mac" ]]; then
     fi
 fi
 
-read -p "Install Go 1.2? (y/N): "
+get_pkgs python-pip
+ensure_py pep8 pylint
+
+if [ -f "$HOME/.s3cfg" ]; then
+    if ! check_prog s3cmd; then
+        read -p "Install s3cmd? (y/N): "
+        if [ "$REPLY" == "y" ]; then
+            echo "Installing s3cmd as root"
+            sudo pip install s3cmd
+            s3cmd --configure
+        fi
+    fi
+fi
+
+read -p "Install Go? (y/N): "
 if [ "$REPLY" == "y" ]; then
-    GODOWNLOAD="https://go.googlecode.com/files/go1.2.linux-amd64.tar.gz"
-    download "$GODOWNLOAD"
-    sudo tar -C /usr/local -xzf $DOWN_DIR/$(basename "$GODOWNLOAD")
+    get_pkgs golang
 fi
 
 read -p "Install Python dev? (y/N): "
@@ -35,11 +54,6 @@ if [ "$REPLY" == "y" ]; then
     get_pkgs build-essential
     get_pkgs python-software-properties
     get_pkgs python-dev
-fi
-
-if ! check_prog s3cmd; then
-    echo "Installing s3cmd as root"
-    sudo pip install s3cmd
 fi
 
 if [ $PLATFORM == "Linux" ]; then
@@ -51,24 +65,11 @@ if [ $PLATFORM == "Linux" ]; then
         : sudo apt-get install nodejs-dev
     fi
 
-    get_pkgs aptitude curl fping emacs23-nox openssh-server tree ack-grep screen
-    get_pkgs python-pip python-virtualenv
-    get_pkgs git mercurial
-    get_pkgs make unzip
+    get_pkgs make unzip aptitude curl openssh-server tree
+    get_pkgs fping emacs23-nox ack-grep screen
+    get_pkgs python-virtualenv
+    # get_pkgs mercurial
 
-    if [ ! -f "$HOME/.s3cfg" ]; then
-        s3cmd --configure
-    fi
-fi
-
-ensure_py pep8
-ensure_py pylint
-
-if [ "$(git config --global user.name)" == "" ]; then
-    read -p "Git Fullname: "
-    git config --global user.name "$REPLY"
-    read -p "Git Email: "
-    git config --global user.email "$REPLY"
 fi
 
 link_files $HOME $PROJ_DIR/home/.*
