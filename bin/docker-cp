@@ -1,0 +1,18 @@
+#!/bin/bash
+# docker-cp --- Copy files to service@docker_image.
+
+FROM="$1"; shift
+TO="$1"; shift
+
+if [[ "$1" != "" ]]; then
+    CONTAINER="$1"; shift
+else
+    CONTAINER=$(docker ps -l -q)
+fi
+
+URI=$(docker port $CONTAINER 22)
+IF=${URI/:*/}
+PORT=${URI/*:/}
+
+echo "Connecting to ${IF}:${PORT} as user service (password 'service'):"
+scp -P $PORT "$FROM" service@${IF}:"$TO"

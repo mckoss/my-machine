@@ -8,10 +8,6 @@ else
 fi
 
 docker run -p 22 -d $IMAGE
-URI=$(docker port $(docker ps -l -q) 22)
-IF=${URI/:*/}
-PORT=${URI/*:/}
 
-echo "Connecting to ${IF}:${PORT} as user service (password 'service'):"
 sleep 1
-ssh service@${IF} -p $PORT
+docker-connect

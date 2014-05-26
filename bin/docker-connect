@@ -1,0 +1,15 @@
+#!/bin/bash
+# docker-connect --- Connect to service@docker_image.
+
+if [[ "$1" != "" ]]; then
+    CONTAINER="$1"; shift
+else
+    CONTAINER=$(docker ps -l -q)
+fi
+
+URI=$(docker port $CONTAINER 22)
+IF=${URI/:*/}
+PORT=${URI/*:/}
+
+echo "Connecting to ${IF}:${PORT} as user service (password 'service'):"
+ssh service@${IF} -p $PORT
