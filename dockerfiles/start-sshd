@@ -1,7 +1,7 @@
 #!/bin/bash
 # start-sshd --- Start (and connect to) ssh server.
 
-docker run -p 22 -d sshd
+docker run -p 22 -d mckoss/sshd
 URI=$(docker port $(docker ps -l -q) 22)
 IF=${URI/:*/}
 PORT=${URI/*:/}
