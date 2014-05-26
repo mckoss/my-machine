@@ -7,6 +7,12 @@ mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 mkdir -p $GOPATH
 
+if [[ "$1" == "-y" ]]; then
+    ASKYES=true; shift
+else
+    ASKYES=false
+fi
+
 if [ "$(git config --global user.name)" == "" ]; then
     read -p "Git Fullname: "
     git config --global user.name "$REPLY"
@@ -19,7 +25,7 @@ if [[ $PLATFORM == "Mac" ]]; then
         echo "Homebrew is already installed."
     else
         read -p "Install Homebrew package manager? (y/N): "
-        if [ "$REPLY" == "y" ]; then
+        if [[ $ALLYES == true || "$REPLY" == "y" ]]; then
             ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
         fi
     fi
@@ -44,23 +50,22 @@ if [ -f "$HOME/.s3cfg" ]; then
     fi
 fi
 
-read -p "Install Go? (y/N): "
-if [ "$REPLY" == "y" ]; then
+if ask "Install Go" ; then
     get_pkgs golang
 fi
 
-read -p "Install Python dev? (y/N): "
-if [ "$REPLY" == "y" ]; then
+if ask "Install Python dev" ; then
     get_pkgs build-essential
     get_pkgs python-software-properties
     get_pkgs python-dev
 fi
 
 if [ $PLATFORM == "Linux" ]; then
-    read -p "Install Node.js? (y/N): "
-    if [ "$REPLY" == "y" ]; then
+    if ask "Install Node.js" ; then
+        echo "Adding PPA for node.js..."
         sudo add-apt-repository ppa:chris-lea/node.js
-        sudo apt-get update
+        : sudo apt-get update
+        echo "Installing node"
         sudo apt-get install nodejs npm
         : sudo apt-get install nodejs-dev
     fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+# docker-build --- Build a docker image from a Dockerfile
+
+docker build -t ${DOCKER_USER}/$1 $PROJ_DIR/dockefiles/$1

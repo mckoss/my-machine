@@ -36,7 +36,7 @@ function check_prog {
 case $PLATFORM in
 Linux)
     PSEARCH='aptitude search'
-    PINSTALL='sudo apt-get install'
+    PINSTALL='sudo apt-get install -y'
     ;;
 Mac)
     PSEARCH='brew search'
@@ -57,8 +57,7 @@ function ensure_prog {
     fi
     if ! check_prog $PROG ; then
         $PSEARCH $PROG_NAME
-        read -p "Do you want to install $PROG_NAME? (y/N): "
-        if [ "$REPLY" == "y" ]; then
+        if ask "Install $PROG_NAME" ; then
             $PINSTALL $PROG_NAME
         fi
     else
@@ -119,12 +118,20 @@ link_files () {
         fi
 
         if [ ! -h "$dest/$base" ]; then
-            read -p "$base exists - replace? (y/N):"
-            if [ "$REPLY" == "y" ]; then
+            if ask "$base exits - replace" ; then
                 ln -sf $file "$dest/$base"
             fi
         else
             echo File $base already linked.
         fi
     done
+}
+
+ask () {
+    if [[ "$ASKYES" == true ]]; then
+        echo "$*"!
+        return 0
+    fi
+    read -p "$*? (y/N): "
+    [[ "$REPLY" == "y" ]]
 }
