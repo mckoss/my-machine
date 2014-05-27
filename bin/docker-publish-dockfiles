@@ -1,0 +1,39 @@
+#!/bin/bash
+# docker-publish-dockfiles --- Publish my Docfiles to trusted build images.
+BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+source $BIN_DIR/.envrc
+source $BIN_DIR/setup-funcs.sh
+
+GIT_API="https://api.github.com/user/repos"
+GIT_USER="mckoss"
+
+if [[ "$*" == "" ]]; then
+    CONTAINERS="sshd my-machine ruby jekyll"
+else
+    CONTAINERS="$@"
+fi
+
+rsync -a $PROJ_DIR/dockerfiles/ ~/src/docker-repos
+
+for container in $CONTAINERS ; do
+    cd ~/src/docker-repos/$container
+    if git rev-parse 2> /dev/null ; then
+        echo $container is a git repo
+    else
+        echo $container is not a git repo
+        if [[ "$GIT_PASSWORD" == "" ]]; then
+            read -p "Git password for ${GIT_USER}: " -s GIT_PASSWORD
+        fi
+        curl --user ${GIT_USER}:${GIT_PASSWORD} $GIT_API -d "{\"name\":\"dockfiles-$container\"}"
+        git init
+        git remote add origin git@github.com:mckoss/dockfiles-$container.git
+    fi
+    NUM_FILES=$(expr $(git status --porcelain 2>/dev/null | grep "^??" | wc -l))
+    if [ $NUM_FILES -ne 0 ]; then
+        git add .
+        git commit -m "Updated $NUM_FILES file(s) from my-machine."
+        git push -u origin master
+    else
+        echo "There are no files to update in $container."
+    fi
+done
