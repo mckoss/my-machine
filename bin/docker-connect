@@ -4,6 +4,12 @@ BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
+if [[ "$1" == "-r" ]]; then
+    USERNAME=root; shift
+else
+    USERNAME=service
+fi
+
 if [[ "$1" != "" ]]; then
     CONTAINER="$1"; shift
 else
@@ -15,4 +21,6 @@ IF=${URI/:*/}
 PORT=${URI/*:/}
 
 echo "Connecting to ${IF}:${PORT} as user service (password 'service'):"
-ssh service@${IF} -p $PORT
+
+# Explicit idenity used here - but can also use ./ssh/config pointing to IdentityFile
+ssh $USERNAME@${IF} -p $PORT -i $PROJ_DIR/dockerfiles/sshd/id_rsa_sshd

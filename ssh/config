@@ -1,0 +1,7 @@
+Host docker
+  HostName localhost
+  User service
+  IdentityFile ~/.ssh/id_rsa_sshd
+
+Host *
+  IdentityFile ~/.ssh/id_rsa
