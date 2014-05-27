@@ -1,7 +1,15 @@
 #!/bin/bash
-# docker-build --- Build a docker image from a Dockerfile
+# docker-build --- Build my docker images from Dockerfiles
 BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
-docker build -t ${DOCKER_USER}/$1 $PROJ_DIR/dockerfiles/$1
+if [[ "$*" == "" ]]; then
+    CONTAINERS="sshd my-machine ruby jekyll"
+else
+    CONTAINERS="$@"
+fi
+
+for container in $CONTAINERS; do
+    docker build -t ${DOCKER_USER}/$container $PROJ_DIR/dockerfiles/$container
+done
