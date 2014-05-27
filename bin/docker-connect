@@ -16,6 +16,8 @@ else
     CONTAINER=$(docker ps -l -q)
 fi
 
+echo Connecting to container $CONTAINER
+
 URI=$(docker port $CONTAINER 22)
 IF=${URI/:*/}
 PORT=${URI/*:/}
