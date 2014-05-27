@@ -77,6 +77,12 @@ if [ $PLATFORM == "Linux" ]; then
     get_pkgs python-virtualenv
     # get_pkgs mercurial
 
+    if [ ! -d ~/.rbenv ]; then
+        if ask "Ruby" ; then
+            git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+            git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+        fi
+    fi
 fi
 
 link_files $HOME $PROJ_DIR/home/.*
