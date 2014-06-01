@@ -12,6 +12,6 @@ fi
 PATH="$GOPATH/bin:$PATH"
 PATH="/Applications/dart/dart-sdk/bin:$PATH"
 if [ -d ~/.rbenv ]; then
-    PATH="$HOME/.rbenv/bin:$PATH
+    PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
