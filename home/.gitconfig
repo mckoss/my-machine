@@ -1,12 +1,12 @@
 [user]
   name = Mike Koss
-  email = mckoss@startpad.org
+  email = mike@mckoss.com
 
 [github]
   user = mckoss
 
 [core]
-  excludesfile = /Users/mike/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = input
 
 [branch]
@@ -18,5 +18,6 @@
 [alias]
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
   vhist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --name-status
+
 [google]
-	lastUpdateCheck = 20140524000000
+    lastUpdateCheck = 20140524000000
