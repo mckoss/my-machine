@@ -40,6 +40,12 @@
             (setq python-indent-offset 4)
             (setq tab-width 4)))
 
+(add-hook 'js-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)
+            (setq js-indent-level 2)
+            (setq tab-width 2)))
+
 ;; From http://stackoverflow.com/questions/92971/how-do-i-set-the-size-of-emacs-window
 (defun set-frame-size-according-to-resolution ()
   (interactive)
@@ -96,7 +102,7 @@
     (setq extension-alist
           '(
             ("py" . "check-py")
-            ("js" . "jslint --strong")
+            ("js" . "jshint")
             ("html" . "tidy.py")
             ("go" . "go test -v")
             )
