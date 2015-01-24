@@ -16,3 +16,18 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "
+
+export DOCKER_HOST=tcp://127.0.0.1:4243
+
+PATH="/usr/local/bin:$PATH"
+
+PATH="$HOME/src/my-machine/bin:$HOME/bin:$PATH"
+
+export GOPATH=$HOME/go
+PATH="$GOPATH/bin:$PATH"
+
+PATH="/Applications/dart/dart-sdk/bin:$PATH"
+if [ -d ~/.rbenv ]; then
+    PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
