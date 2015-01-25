@@ -132,7 +132,7 @@
 (global-set-key [f8] 'pretty-print-region)
 
 ; Install additional emacs modes
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (require 'dart-mode)
 (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
