@@ -86,5 +86,5 @@ if [ $PLATFORM == "Linux" ]; then
 fi
 
 link_files $HOME $PROJ_DIR/home/.*
-link_files $HOME/.emacs.d $PROJ_DIR/home/*.el
+link_files $HOME/.emacs.d/lisp $PROJ_DIR/home/*.el
 link_files $HOME/.ssh $PROJ_DIR/ssh/*

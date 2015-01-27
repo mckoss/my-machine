@@ -1,7 +1,5 @@
 alias ll='ls -alhF'
+alias show-path='echo -e ${PATH//:/\\n}'
 
-if ! type ack > /dev/null 2>&1; then
-   alias ack='ack-grep'
-fi
 
-alias e="emacs"
+
