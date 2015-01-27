@@ -16,3 +16,4 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 PS1="\[\e]2;\u@\h \w\a\e[0;31m\]\W $\[\e[m\] "
+PATH="$HOME/bin:$HOME/src/my-machine/bin:$PATH"
