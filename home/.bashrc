@@ -24,6 +24,8 @@ PATH="/usr/local/bin:$PATH"
 
 PATH="$HOME/src/my-machine/bin:$HOME/bin:$PATH"
 
+PATH="$(npm --global prefix)/bin:$PATH"
+
 export GOPATH=$HOME/go
 PATH="$GOPATH/bin:$PATH"
 
