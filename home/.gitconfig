@@ -13,7 +13,7 @@
   autosetupmerge = true
 
 [push]
-  default = current
+	default = simple
 
 [alias]
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
