@@ -143,3 +143,11 @@
 (defun set-newline-and-indent()
   (local-set-key (kbd "RET") 'newline-and-indent))
 (add-hook 'go-mode-hook 'set-newline-and-indent)
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
