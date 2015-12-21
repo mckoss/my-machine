@@ -18,6 +18,8 @@
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
  '(show-trailing-whitespace t)
+ `(compile-command "run-tests")
+ `(compilation-scroll-output t)
  )
 
 (autoload 'longlines-mode "longlines.el"
@@ -91,6 +93,8 @@
 
 (global-set-key "\M-[" 'decrease-indent)
 (global-set-key "\M-]" 'increase-indent)
+
+(global-set-key (kbd "C-x c") `compile)
 
 (global-set-key (kbd "C-x SPC") 'fixup-whitespace)
 
