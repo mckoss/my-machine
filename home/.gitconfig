@@ -13,11 +13,11 @@
   autosetupmerge = true
 
 [push]
-	default = simple
+  default = simple
 
 [alias]
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
   vhist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --name-status
 
-[google]
-    lastUpdateCheck = 20140524000000
+[diff]
+  renames = copies

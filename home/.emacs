@@ -4,9 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "~/.emacs-backups"))))
- '(tab-width 4)
+ '(tab-width 2)
  '(default-fill-column 95)
- '(c-basic-offset 4)
+ '(c-basic-offset 2)
  '(column-number-mode t)
  '(default-input-method "latin-1-postfix")
  '(global-font-lock-mode t nil (font-lock))
@@ -39,8 +39,8 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil)
-            (setq python-indent-offset 4)
-            (setq tab-width 4)))
+            (setq python-indent-offset 2)
+            (setq tab-width 2)))
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -83,13 +83,13 @@
   (interactive)
   (if (< (point) (mark))
       (exchange-point-and-mark))
-  (indent-rigidly (mark) (point) 4))
+  (indent-rigidly (mark) (point) 2))
 
 (defun decrease-indent ()
   (interactive)
   (if (< (point) (mark))
       (exchange-point-and-mark))
-  (indent-rigidly (mark) (point) -4))
+  (indent-rigidly (mark) (point) -2))
 
 (global-set-key "\M-[" 'decrease-indent)
 (global-set-key "\M-]" 'increase-indent)
