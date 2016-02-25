@@ -7,6 +7,7 @@
  '(tab-width 2)
  '(default-fill-column 95)
  '(c-basic-offset 2)
+ `(sh-basic-offset 2)
  '(column-number-mode t)
  '(default-input-method "latin-1-postfix")
  '(global-font-lock-mode t nil (font-lock))
