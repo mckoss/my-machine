@@ -1,0 +1,4 @@
+--type-add=js=.ts
+--type-add=js=.jsx
+--ignore-dir=node_modules
+--ignore-dir=dist
