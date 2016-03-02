@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "~/.emacs-backups"))))
  '(tab-width 2)
- '(default-fill-column 95)
+ '(default-fill-column 80)
  '(c-basic-offset 2)
  `(sh-basic-offset 2)
  '(column-number-mode t)
@@ -21,6 +21,7 @@
  '(show-trailing-whitespace t)
  `(compile-command "run-tests")
  `(compilation-scroll-output t)
+ `(split-width-threshold 140)
  )
 
 (autoload 'longlines-mode "longlines.el"
