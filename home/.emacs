@@ -102,7 +102,7 @@
     (setq extension-alist
           '(
             ("py" . "check-py")
-            ("js" . "jshint")
+            ("js" . "jshint --reporter unix")
             ("html" . "tidy.py")
             ("go" . "go test -v")
             )

@@ -31,3 +31,6 @@ if [ -d ~/.rbenv ]; then
     PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
+
+export NVM_DIR="/Users/mckoss/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
