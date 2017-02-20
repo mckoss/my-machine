@@ -73,7 +73,7 @@ if [ $PLATFORM == "Linux" ]; then
     fi
 
     get_pkgs make unzip aptitude curl openssh-server tree
-    get_pkgs fping emacs23-nox ack-grep screen
+    get_pkgs fping emacs24 ack-grep screen
     get_pkgs python-virtualenv
     # get_pkgs mercurial
 

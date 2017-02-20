@@ -4,9 +4,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "~/.emacs-backups"))))
- '(tab-width 4)
- '(default-fill-column 95)
- '(c-basic-offset 4)
+ '(tab-width 2)
+ '(default-fill-column 80)
+ '(c-basic-offset 2)
+ `(sh-basic-offset 2)
  '(column-number-mode t)
  '(default-input-method "latin-1-postfix")
  '(global-font-lock-mode t nil (font-lock))
@@ -18,6 +19,9 @@
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
  '(show-trailing-whitespace t)
+ `(compile-command "run-tests")
+ `(compilation-scroll-output t)
+ `(split-width-threshold 140)
  )
 
 (autoload 'longlines-mode "longlines.el"
@@ -37,8 +41,8 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil)
-            (setq python-indent-offset 4)
-            (setq tab-width 4)))
+            (setq python-indent-offset 2)
+            (setq tab-width 2)))
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -81,16 +85,18 @@
   (interactive)
   (if (< (point) (mark))
       (exchange-point-and-mark))
-  (indent-rigidly (mark) (point) 4))
+  (indent-rigidly (mark) (point) 2))
 
 (defun decrease-indent ()
   (interactive)
   (if (< (point) (mark))
       (exchange-point-and-mark))
-  (indent-rigidly (mark) (point) -4))
+  (indent-rigidly (mark) (point) -2))
 
 (global-set-key "\M-[" 'decrease-indent)
 (global-set-key "\M-]" 'increase-indent)
+
+(global-set-key (kbd "C-x c") `compile)
 
 (global-set-key (kbd "C-x SPC") 'fixup-whitespace)
 
@@ -143,3 +149,12 @@
 (defun set-newline-and-indent()
   (local-set-key (kbd "RET") 'newline-and-indent))
 (add-hook 'go-mode-hook 'set-newline-and-indent)
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . javascript-mode))
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
