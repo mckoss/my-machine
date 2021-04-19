@@ -1,0 +1,2 @@
+#!/bin/bash
+nohup $HOME/AppData/Local/GitHubDesktop/GitHubDesktop.exe >/dev/null 2>&1 &
