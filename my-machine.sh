@@ -1,5 +1,5 @@
 DOWN_DIR=$HOME/Downloads
-
+ 
 function check_prog {
     type $1 > /dev/null 2>&1
 }
@@ -43,7 +43,7 @@ if [ "$REPLY" == "y" ]; then
     sudo apt-get update
 fi
 
-get aptitude curl emacs23-nox git
+get aptitude curl emacs-nox git
 
 if ! git config --global user.name; then
     git config --global user.name "Mike Koss"
