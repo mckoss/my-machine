@@ -43,14 +43,14 @@ if [ "$REPLY" == "y" ]; then
     sudo apt-get update
 fi
 
-get aptitude curl emacs-nox git
+get curl emacs-nox git
 
 if ! git config --global user.name; then
     git config --global user.name "Mike Koss"
-    git config --global user.email mckoss@startpad.org
+    git config --global user.email mike@mckoss.com
 fi
 
 if [ ! -d "$HOME/src/my-machine" ]; then
     mkdir -p $HOME/src
-    git clone git@github.com:mckoss/my-machine.git $HOME/src/my-machine
+    git clone https://github.com/mckoss/my-machine.git $HOME/src/my-machine
 fi
