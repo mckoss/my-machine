@@ -3,11 +3,8 @@ BIN_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 source $BIN_DIR/.envrc
 source $BIN_DIR/setup-funcs.sh
 
-echo "$PROJECT: I think you are running $PLATFORM."
-
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
-mkdir -p $GOPATH
 
 if [[ "$1" == "-y" ]]; then
     ASKYES=true; shift
@@ -22,69 +19,8 @@ if [ "$(git config --global user.name)" == "" ]; then
     git config --global user.email "$REPLY"
 fi
 
-if [[ $PLATFORM == "Mac" ]]; then
-    if check_prog brew; then
-        echo "Homebrew is already installed."
-    else
-        read -p "Install Homebrew package manager? (y/N): "
-        if [[ $ALLYES == true || "$REPLY" == "y" ]]; then
-            ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-        fi
-    fi
-
-    if ! check_prog pip; then
-        echo "Installing pip..."
-        sudo easy_install pip
-    fi
-fi
-
-get_pkgs python-pip
-ensure_py pep8 pylint
-
-if [ -f "$HOME/.s3cfg" ]; then
-    if ! check_prog s3cmd; then
-        read -p "Install s3cmd? (y/N): "
-        if [ "$REPLY" == "y" ]; then
-            echo "Installing s3cmd as root"
-            sudo pip install s3cmd
-            s3cmd --configure
-        fi
-    fi
-fi
-
-if ask "Install Go" ; then
-    get_pkgs golang
-fi
-
-if ask "Install Python dev" ; then
-    get_pkgs build-essential
-    get_pkgs python-software-properties
-    get_pkgs python-dev
-fi
-
-if [ $PLATFORM == "Linux" ]; then
-    if ask "Install Node.js" ; then
-        echo "Adding PPA for node.js..."
-        sudo add-apt-repository ppa:chris-lea/node.js
-        : sudo apt-get update
-        echo "Installing node"
-        get_pkgs nodejs npm
-        : sudo apt-get install nodejs-dev
-    fi
-
-    get_pkgs make unzip aptitude curl openssh-server tree
-    get_pkgs fping emacs24 ack-grep screen
-    get_pkgs python-virtualenv
-    # get_pkgs mercurial
-
-    if [ ! -d ~/.rbenv ]; then
-        if ask "Ruby" ; then
-            git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-            git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-        fi
-    fi
-fi
+# get_pkgs make unzip curl openssh-server tree
+# get_pkgs fping ack-grep screen
 
 link_files $HOME $PROJ_DIR/home/.*
 link_files $HOME/.emacs.d/lisp $PROJ_DIR/home/*.el
-link_files $HOME/.ssh $PROJ_DIR/ssh/*
