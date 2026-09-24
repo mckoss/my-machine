@@ -2,11 +2,11 @@
 
 These are Mike's defaults for every coding agent (Claude Code, Codex,
 Antigravity) in every repository. This one file is the source of truth:
-`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and `~/.gemini/GEMINI.md` are
-symlinks to it. Edit `~/.agents/AGENTS.md` itself; some tools replace a
-symlink with a plain file when they save through it. It is in turn a symlink to
-`~/src/my-machine/home/.agents/AGENTS.md`, shared across machines: commit and
-push edits there, and run `~/src/my-machine/bin/setup-agents` to relink.
+`~/src/my-machine/home/.agents/AGENTS.md`, shared across machines via that
+repo. `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and `~/.gemini/GEMINI.md`
+are symlinks to it. Edit the repo file itself, then commit and push; some
+tools replace a symlink with a plain file when they save through it. Run
+`~/src/my-machine/bin/setup-agents` to relink.
 
 A repository's own `AGENTS.md` (or `CLAUDE.md`/`GEMINI.md`) refines or
 overrides these defaults. Read it before starting work in a repo — Claude Code

@@ -1,11 +1,9 @@
 #!/bin/bash
 # Share one global AGENTS.md across AI coding harnesses (and machines).
 #
-#   repo:  home/.agents/AGENTS.md          <- the shared, committed copy
-#   ~/.agents/AGENTS.md                    -> repo copy
-#   ~/.claude/CLAUDE.md                    -> ../.agents/AGENTS.md
-#   ~/.codex/AGENTS.md                     -> ../.agents/AGENTS.md
-#   ~/.gemini/GEMINI.md                    -> ../.agents/AGENTS.md
+#   ~/.claude/CLAUDE.md  -> <repo>/home/.agents/AGENTS.md
+#   ~/.codex/AGENTS.md   -> <repo>/home/.agents/AGENTS.md
+#   ~/.gemini/GEMINI.md  -> <repo>/home/.agents/AGENTS.md
 #
 # Safe to re-run. Never overwrites a file whose content differs from the repo
 # copy; it asks first, and then only moves the file aside to a .bak-* backup.
@@ -21,19 +19,10 @@ else
 fi
 
 REPO_FILE="$PROJ_DIR/home/.agents/AGENTS.md"
-HUB="$HOME/.agents/AGENTS.md"
-HUB_REL="../.agents/AGENTS.md"
 
-# First run on a machine that already has an AGENTS.md: import it into the repo.
 if [ ! -f "$REPO_FILE" ]; then
-    if [ -f "$HUB" ]; then
-        mkdir -p "$(dirname "$REPO_FILE")"
-        cp -L "$HUB" "$REPO_FILE"
-        echo "Imported $HUB into $REPO_FILE - commit it to share."
-    else
-        echo "No $REPO_FILE or $HUB to share." >&2
-        exit 1
-    fi
+    echo "Missing $REPO_FILE." >&2
+    exit 1
 fi
 
 # link_agents <link path> <link target> - make <link path> a symlink to
@@ -42,7 +31,7 @@ link_agents () {
     local dest="$1" target="$2"
     local dir="$(dirname "$dest")"
 
-    if [ -L "$dest" ] && [ "$dest" -ef "$REPO_FILE" ]; then
+    if [ -L "$dest" ] && [ "$(readlink "$dest")" == "$target" ]; then
         echo "$dest already linked."
         return
     fi
@@ -68,7 +57,6 @@ link_agents () {
     echo "Linked $dest -> $target."
 }
 
-link_agents "$HUB" "$REPO_FILE"
-link_agents "$HOME/.claude/CLAUDE.md" "$HUB_REL"
-link_agents "$HOME/.codex/AGENTS.md" "$HUB_REL"
-link_agents "$HOME/.gemini/GEMINI.md" "$HUB_REL"
+link_agents "$HOME/.claude/CLAUDE.md" "$REPO_FILE"
+link_agents "$HOME/.codex/AGENTS.md" "$REPO_FILE"
+link_agents "$HOME/.gemini/GEMINI.md" "$REPO_FILE"
