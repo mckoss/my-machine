@@ -3,8 +3,8 @@
 These are Mike's defaults for every coding agent (Claude Code, Codex,
 Antigravity) in every repository. This one file is the source of truth:
 `~/src/my-machine/home/.agents/AGENTS.md`, shared across machines via that
-repo. `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and `~/.gemini/GEMINI.md`
-are symlinks to it. Edit the repo file itself, then commit and push; some
+repo. `~/.agents/AGENTS.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and
+`~/.gemini/GEMINI.md` are symlinks to it. Edit the repo file itself, then commit and push; some
 tools replace a symlink with a plain file when they save through it. Run
 `~/src/my-machine/bin/setup-agents` to relink.
 

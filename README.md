@@ -12,10 +12,12 @@ You can setup a new machine by executing:
 `home/.agents/AGENTS.md` holds my global instructions for AI coding agents. Run
 `bin/setup-agents` (also run by `bin/setup-machine`) to link it in place:
 
+    ~/.agents/AGENTS.md  -> <repo>/home/.agents/AGENTS.md
     ~/.claude/CLAUDE.md  -> <repo>/home/.agents/AGENTS.md
     ~/.codex/AGENTS.md   -> <repo>/home/.agents/AGENTS.md
     ~/.gemini/GEMINI.md  -> <repo>/home/.agents/AGENTS.md
 
-It is safe to re-run. A file that already matches is replaced by a link; one
-that differs is shown as a diff and left alone unless you agree to move it
-aside to a `.bak-*` backup.
+It is safe to re-run and never deletes a file. A plain file is moved aside to a
+`.bak-*` backup before it is linked; one whose content differs is shown as a
+diff first and left alone unless you agree. Other contents of `~/.agents`
+(such as `skills/`) are not touched.
