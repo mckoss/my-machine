@@ -24,3 +24,4 @@ fi
 
 link_files $HOME $PROJ_DIR/home/.*
 link_files $HOME/.emacs.d/lisp $PROJ_DIR/home/*.el
+$BIN_DIR/setup-agents $([[ "$ASKYES" == true ]] && echo -y)
