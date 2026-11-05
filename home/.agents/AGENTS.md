@@ -6,7 +6,9 @@ Antigravity) in every repository. This one file is the source of truth:
 repo. `~/.agents/AGENTS.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, and
 `~/.gemini/GEMINI.md` are symlinks to it. Edit the repo file itself, then commit and push; some
 tools replace a symlink with a plain file when they save through it. Run
-`~/src/my-machine/bin/setup-agents` to relink.
+`~/src/my-machine/bin/setup-agents` to relink. Claude Code cloud sessions get it
+from the cloud environment's setup script instead (see "Claude Code cloud
+sessions" below).
 
 A repository's own `AGENTS.md` (or `CLAUDE.md`/`GEMINI.md`) refines or
 overrides these defaults. Read it before starting work in a repo — Claude Code
@@ -129,6 +131,34 @@ repository says otherwise.
  Before any requested Railway CLI action, verify the project, service,
  environment, and connected GitHub repo; prefer explicit IDs and stop if they
  don't match.
+
+## Claude Code cloud sessions
+
+Claude Code on the web runs in a disposable cloud container that has its own
+tooling, and its environment's setup script installs this file as
+`~/.claude/CLAUDE.md`. Everything above still applies, with these exceptions:
+
+- **Branch:** work on the branch the session assigns, not in a sibling
+ worktree; the primary-checkout and worktree rules don't apply. Send every
+ change through that branch and a PR, even a small one that would otherwise
+ go straight to `main`. If the branch's PR has already merged, restart the
+ branch from the latest `main` instead of stacking on merged history.
+- **PRs and merging:** this file is my explicit request to open the PR and
+ squash-merge it yourself once local checks are green, as in "Branching and PR
+ workflow". Don't wait for a separate "merge" prompt unless I asked to review
+ first.
+- **GitHub tooling:** `gh` works only for search there. Use the GitHub MCP
+ tools for PRs, merges, workflow runs and labels. When a step needs something
+ those tools can't do (for example enabling head-branch deletion), tell me the
+ exact setting to change instead of skipping it.
+- **Watching CI:** there is no `gh run watch`. After merging, subscribe to the
+ PR's activity or schedule a check-in, then report the CI and deploy result in
+ a short follow-up. Never poll with `sleep`.
+- **Cleanup:** there is no worktree to remove. Head-branch auto-deletion
+ removes the remote branch; if that setting is off, tell me.
+- **Persistence:** the container is discarded when the session ends. Commit
+ and push anything worth keeping, including `CHECKLIST.md` and `QUESTIONS.md`
+ from long sessions.
 
 ## Long autonomous sessions
 
