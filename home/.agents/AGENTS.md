@@ -151,6 +151,11 @@ tooling, and its environment's setup script installs this file as
  tools for PRs, merges, workflow runs and labels. When a step needs something
  those tools can't do (for example enabling head-branch deletion), tell me the
  exact setting to change instead of skipping it.
+- **Environment changes:** whenever I need to change the cloud environment's
+ network access, give me the hosts as a fenced code block with one bare
+ domain per line (no bullets, schemes, paths or notes), ready to paste into
+ the environment's allowed-domains box. Put any explanation outside the
+ block.
 - **Watching CI:** there is no `gh run watch`. After merging, subscribe to the
  PR's activity or schedule a check-in, then report the CI and deploy result in
  a short follow-up. Never poll with `sleep`.
