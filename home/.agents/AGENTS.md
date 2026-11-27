@@ -141,8 +141,20 @@ tooling, and its environment's setup script installs this file as
 - **Branch:** work on the branch the session assigns, not in a sibling
  worktree; the primary-checkout and worktree rules don't apply. Send every
  change through that branch and a PR, even a small one that would otherwise
- go straight to `main`. If the branch's PR has already merged, restart the
- branch from the latest `main` instead of stacking on merged history.
+ go straight to `main`.
+- **Reusing the branch after its PR merged:** never reset the branch and
+ force-push. The session's safety checks block force-pushes, and merging the
+ old tip back in afterwards causes conflicts and duplicated content. Before
+ making the next change:
+  - If the remote branch is gone (auto-deleted), start it fresh from the
+   latest default branch (`main` or `master`).
+  - If the remote branch still exists, check out its tip and run
+   `git merge origin/<default>`. That merge is clean, because the squash
+   merge already put the same content on the default branch. Confirm
+   `git diff origin/<default>` is empty, then make the change and push
+   normally (a fast-forward).
+  - Merge first, edit second. Doing it in the other order is what causes
+   the conflicts.
 - **PRs and merging:** this file is my explicit request to open the PR and
  squash-merge it yourself once local checks are green, as in "Branching and PR
  workflow". Don't wait for a separate "merge" prompt unless I asked to review
@@ -160,7 +172,9 @@ tooling, and its environment's setup script installs this file as
  PR's activity or schedule a check-in, then report the CI and deploy result in
  a short follow-up. Never poll with `sleep`.
 - **Cleanup:** there is no worktree to remove. Head-branch auto-deletion
- removes the remote branch; if that setting is off, tell me.
+ removes the remote branch. If that setting is off (a merged PR's branch is
+ still on the remote), tell me once per repo, with the setting to change:
+ Settings → General → Pull Requests → "Automatically delete head branches".
 - **Persistence:** the container is discarded when the session ends. Commit
  and push anything worth keeping, including `CHECKLIST.md` and `QUESTIONS.md`
  from long sessions.
